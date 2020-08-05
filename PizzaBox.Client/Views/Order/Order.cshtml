@@ -1,0 +1,22 @@
+@model PizzaBox.Client.Models.PizzaViewModel
+
+@using(Html.BeginForm("PlaceOrder", "Order", null, FormMethod.Post))
+{
+  @Html.AntiForgeryToken();
+  foreach(var crust in Model.Crusts)
+  {
+    @Html.RadioButtonFor(m => m.Crust, crust.Option);
+    @Html.LabelFor(m => m.Crust);
+    @Html.ValidationMessageFor(m => m.Crust);
+  }
+
+  @Html.DropDownListFor(m => m.Size, new SelectList(Model.Sizes));
+
+foreach(var topping in Model.Toppings2)
+  {
+    @Html.CheckBoxFor(m => topping.IsSelected, new { name = "selectedtoppings2", value = topping.Text });
+    @Html.HiddenFor(m => m.SelectedToppings2)
+  }
+
+  <button type="submit">place order</button>
+}
