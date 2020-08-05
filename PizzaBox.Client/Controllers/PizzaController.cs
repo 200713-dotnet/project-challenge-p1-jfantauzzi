@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using PizzaBox.Storing;
@@ -18,7 +19,7 @@ namespace PizzaBox.Client.Controllers
     [HttpGet()]
     public IActionResult Get()
     {
-      Viewbag.PizzaList = _db.Pizzas.ToList();
+      ViewBag.PizzaList = _db.Pizzas.ToList();
       
       return View("Home", _db.Pizzas.ToList());
     }

@@ -4,6 +4,6 @@ namespace PizzaStore.Domain.Models
   {
     public int Id { get; set; }
 
-    public string Option { get; set; }
+    public string Option { get; set; } // also name
   }
 }

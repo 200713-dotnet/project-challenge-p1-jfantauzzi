@@ -6,7 +6,7 @@ namespace PizzaStore.Domain.Models
   public class StoreModel : AModel
   {
 
-    
+    public List<OrderModel> Orders { get; set; }
 
     // Singleton private IFactory _factory;
     /* private readonly StoreModel _store;
