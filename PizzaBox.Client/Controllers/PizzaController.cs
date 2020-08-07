@@ -26,9 +26,9 @@ namespace PizzaBox.Client.Controllers
 
     //get specific pizza
     [HttpGet("{id}")]
-    public PizzaModel Get(int id)
+    public Pizza Get(int id)
     {
-      return _db.Pizzas.SingleOrDefault(p => p.Id == id);
+      return _db.Pizzas.SingleOrDefault(p => p.PizzaId == id);
     }
 
   }

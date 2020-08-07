@@ -9,5 +9,10 @@ namespace PizzaStore.Domain.Models
     public List<ToppingModel> Toppings { get; set; }
 
     public double Price { get; set; }
+
+    public PizzaModel()
+    {
+      
+    }
   }
 }

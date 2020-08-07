@@ -9,6 +9,7 @@ using PizzaBox.Client.Models;
 
 namespace PizzaBox.Client.Controllers
 {
+    //[Route("/[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
