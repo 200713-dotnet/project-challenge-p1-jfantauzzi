@@ -2,17 +2,17 @@
   Layout = "_Layout";
 }
 
-@* @model PizzaBox.Client.Models.PizzaViewModel *@
-
-@* @model PizzaBox.Client.Models.PizzaViewModel *@
+ @* @model PizzaBox.Client.Models.PizzaViewModel *@
 
 <h2>Pizza List</h2>
 <ul>
   @foreach (var p in @Model)
   {
-    <li>@p</li>
+    <li>@p.Option</li>
   }
+  <li> <a href="/order/start">Custom Pizza</a>  </li>
 </ul>
+
 
 <form action=""> PizzaViewModel
   display the crusts

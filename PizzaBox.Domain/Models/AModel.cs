@@ -5,5 +5,11 @@ namespace PizzaStore.Domain.Models
     public int Id { get; set; }
 
     public string Option { get; set; } // also name
+
+    public override string ToString()
+    {
+      return Option;
+    }
+    
   }
 }

@@ -6,6 +6,7 @@ using PizzaStore.Domain.Models;
 
 namespace PizzaBox.Client.Controllers
 {
+  //[Route("/[controller]/[action]")]
   public class PizzaController : Controller
   {
     private readonly PizzaStoreDbContext _db;

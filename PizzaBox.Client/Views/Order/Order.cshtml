@@ -5,16 +5,45 @@
 
 @model PizzaBox.Client.Models.PizzaViewModel
 
-<form action="/order/placeorder" method="post">
-  
-  @foreach (var crust in @Model.Crusts)
-  {
-    <input type="radio" name="crust" id="crust" value="@crust.Option" data-val="true" data-val-required="Needed">
-    <label for="crust">@crust.Option</label>
-    @Html.ValidationMessageFor(m => m.Crust);
-  }
 
-  <select>
+@using(Html.BeginForm("PlaceOrder", "Order", null, FormMethod.Post))
+{
+  @Html.AntiForgeryToken();
+  
+  <h5>Pick Your Size</h5>
+  @Html.DropDownListFor(m => m.Size, new SelectList(Model.Sizes), "-Size-")
+  <br><br>
+
+  <h5>Pick Your Crust</h5>
+  @Html.DropDownListFor(m => m.Crust, new SelectList(Model.Crusts), "-Crust-")
+  <br><br>
+  
+<h5> Pick Your Toppings</H5>
+foreach (var topping in Model.Toppings2)
+  {
+    @Html.CheckBoxFor(m => topping.IsSelected, new { name = "selectedtoppings2", value = topping.Text });
+    @Html.HiddenFor(m => m.SelectedToppings2)
+  }
+  <br><br>
+
+
+  <input value="Add to Order" type="submit">
+}
+
+@* <form action="placeorder" method="post">
+  @Html.AntiForgeryToken()
+  
+  <h4> Pick Your Crust:</h4>
+  <select name="crust" id="">
+    @foreach (var crust in @Model.Crusts)
+    {
+      <option value="@crust.Option">@crust.Option</option>
+    }
+  </select>
+  @Html.ValidationMessageFor(m => m.Crust);
+
+<h4> Pick Your Size:</h4>
+  <select name="size" id="">
     @foreach (var size in @Model.Sizes)
     {
       <option value="@size.Option">@size.Option</option>
@@ -22,12 +51,16 @@
   </select>
   @Html.ValidationMessageFor(m => m.Size);
 
+<h4> Pick Your Toppings:</h4>
   @foreach (var topping in @Model.Toppings2)
   {
     <input type="checkbox" name="selectedtoppings2" id="selectedtoppings2" value="@topping.Text">
-    <label for="selectedtoppings2">@topping.IsSelected</label>
+    <label for="selectedtoppings2">@topping.Text</label>
     @Html.ValidationMessageFor(m => m.SelectedToppings2);
   }
 
-  <button type="submit">place order</button>
-</form>
+  <br>
+  <br>
+  <button type="submit">Add to Order</button>
+</form> *@
+

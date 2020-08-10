@@ -24,6 +24,11 @@ namespace PizzaBox.Storing.Repository
 
     }
 
+  public void CreatePizzaTopping(domain.PizzaModel pizza)
+
+{
+  var newPizza = new Pizza();
+}
     public IEnumerable<domain.PizzaModel> ReadAll() //or list
     {
       var domainPizzaList = new List<domain.PizzaModel>();
@@ -42,9 +47,42 @@ namespace PizzaBox.Storing.Repository
       return domainPizzaList;
     }
 
+    public List<domain.CrustModel> ReadCrusts()
+    {
+      var domainCrustList = new List<domain.CrustModel>();
+
+      foreach (var crust in _db.Crusts.ToList())
+      {
+        domainCrustList.Add(new domain.CrustModel(){ Option = crust.Option});
+      }
+      return domainCrustList;
+    }
+
+    public List<domain.SizeModel> ReadSizes()
+    {
+      var domainSizeList = new List<domain.SizeModel>();
+
+      foreach (var size in _db.Sizes.ToList())
+      {
+        domainSizeList.Add(new domain.SizeModel(){ Option = size.Option});
+      }
+      return domainSizeList;
+    }
+
+    public List<domain.ToppingModel> ReadToppings()
+    {
+      var domainToppingList = new List<domain.ToppingModel>();
+
+      foreach (var topping in _db.Toppings.ToList())
+      {
+        domainToppingList.Add(new domain.ToppingModel(){ Option = topping.Option});
+      }
+      return domainToppingList;
+    }
+
     public void Update()
     {
-
+      
     }
 
     public void Delete()

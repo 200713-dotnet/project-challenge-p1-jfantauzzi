@@ -13,7 +13,7 @@ namespace PizzaBox.Storing
     public PizzaStoreDbContext(DbContextOptions Options) : base(Options) { }
 
     //Create Tables
-    public DbSet<CrustModel> Crusts { get; set; }
+    public DbSet<Crust> Crusts { get; set; }
     public DbSet<Pizza> Pizzas { get; set; } //create table
 
     public DbSet<Size> Sizes { get; set; }
@@ -27,7 +27,7 @@ namespace PizzaBox.Storing
     {
       if (!optionsBuilder.IsConfigured)
       {
-        optionsBuilder.UseSqlServer("server=localhost;database=PizzaBoxDb;user id=sa;password=Password12345");
+        optionsBuilder.UseSqlServer("server=jrevp0.database.windows.net;database=PizzaBoxDb;user id=sqladmin;password=Jollyboy1");
       }
     }
 
@@ -129,6 +129,8 @@ namespace PizzaBox.Storing
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK_ToppingId");
                });
+
+      
 
       OnModelCreatingPartial(builder);
 

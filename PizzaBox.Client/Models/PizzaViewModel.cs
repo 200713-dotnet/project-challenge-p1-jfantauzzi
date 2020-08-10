@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PizzaStore.Domain.Models;
+using PizzaBox.Storing;
+using PizzaBox.Storing.Repository;
 
 namespace PizzaBox.Client.Models
 {
@@ -18,15 +20,25 @@ namespace PizzaBox.Client.Models
     [Required(ErrorMessage = "Select a size!")]
     public SizeModel Size { get; set; }
 
-    [MinLength(2), MaxLength(5)] //get a message telling user they're out of range
+    //get a message telling user they're out of range
     public List<string> SelectedToppings { get; set; }
+
+    [MinLength(2)]
+    [MaxLength(5)]
     public List<string> SelectedToppings2 { get; set; }
 
     public PizzaViewModel()
     {
-      Crusts = new List<CrustModel>() { new CrustModel() { Option = "normal" } }; //repogivemecrusts()
-      Sizes = new List<SizeModel>() { new SizeModel() { Option = "medium" } }; //repogivemesizes()
-      Toppings = new List<ToppingModel>() { new ToppingModel() { Option = "pepperoni" } };
+      var db = new Repository();
+      //Crusts = new List<CrustModel>() { new CrustModel() { Option = "normal" } }; //repogivemecrusts()
+      Crusts = db.ReadCrusts();
+      Sizes = db.ReadSizes();
+      Toppings = db.ReadToppings();
+      Toppings2 = new List<CheckBoxTopping>(); // { new CheckBoxTopping() {Text = "pepperoni ", IsSelected = false} };
+      foreach (var t in Toppings)
+      {
+        Toppings2.Add(new CheckBoxTopping() { Id = t.Id, Option = t.Option, Text = t.Option, IsSelected = false });
+      }
     }
 
     public class CheckBoxTopping : ToppingModel
@@ -34,6 +46,7 @@ namespace PizzaBox.Client.Models
       public string Text { get; set; }
       public bool IsSelected { get; set; }
     }
+
 
   }
 }
