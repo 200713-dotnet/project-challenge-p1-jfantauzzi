@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PizzaBox.Client.Models;
 using PizzaBox.Storing;
+using PizzaBox.Storing.Repository;
 using PizzaStore.Domain.Factories;
 
 namespace PizzaStore.Client.Controllers
@@ -23,18 +24,23 @@ namespace PizzaStore.Client.Controllers
       return View("Order", new PizzaViewModel());
     }
 
+    public IActionResult Preset()
+    {
+      return View("Preset", new SpecialViewModel());
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult PlaceOrder(PizzaViewModel pizzaVM) //model binding
     {
-      System.Console.WriteLine(ModelState.IsValid);
       if (ModelState.IsValid)
       {
         int cr = 1;
         int si = 1;
         List<int> top = new List<int>();
-        // var p = new Pizza(); // dependency injection
-        switch (pizzaVM.Crust.Option)
+
+        ///convert selections to id's
+        switch (pizzaVM.SelectedCrust)
         {
           case "normal":
             cr = 1;
@@ -49,7 +55,7 @@ namespace PizzaStore.Client.Controllers
             break;
         }
 
-        switch (pizzaVM.Size.Option)
+        switch (pizzaVM.SelectedSize) 
         {
           case "small":
             si = 1;
@@ -88,35 +94,99 @@ namespace PizzaStore.Client.Controllers
               break;
           }
         }
+        ///
 
-        using (var db = new PizzaStoreDbContext())
+        //adding pizza and pizzatopping to repo
+        var db = new Repository();
+        db.CreatePizza(cr, si, "Custom Pizza");
+        int key = db.GetLasestPizzaId();
+        foreach (var i in top)
         {
-
-          db.Pizzas.Add(new Pizza()
-          {
-            CrustId = cr,
-            SizeId = si,
-            Option = "Custom Pizza"
-          });
-
-          int key = db.Pizzas.Max(t => t.PizzaId);
-          foreach (var i in top)
-            db.PizzaTopping.Add(new PizzaTopping
-            {
-              PizzaId = key,
-              ToppingId = i
-            });
-
-          //    add to order  ////
+          db.CreatePizzaTopping(key, i);
         }
 
-        _db.SaveChanges();
-
-        return View("/pizza/get");
+        return Redirect("/pizza/get");
         //return Redirect("/user/index"); // http 300-series status
       }
 
       return View("Order", pizzaVM);
     }
+
+    [HttpPost]
+    public IActionResult PresetOrder(SpecialViewModel specialVM) //model binding
+    {
+        System.Console.WriteLine(ModelState.IsValid);
+        int si = 1;
+        int cr = 1;
+        string spec = specialVM.SelectedSpecial;
+        List<int> top = new List<int>();
+
+        switch (specialVM.SelectedSize) 
+        {
+          case "small":
+            si = 1;
+            break;
+          case "medium":
+            si = 2;
+            break;
+          case "large":
+            si = 3;
+            break;
+          default:
+            break;
+        }
+
+        //determine crust, toppings based of special
+        if (spec == "The Regular")
+        {
+          cr = 1;
+          top.Add(1);
+          top.Add(2);
+        }
+        else if(spec == "The Deep Little")
+        {
+          cr = 3;
+          top.Add(1);
+          top.Add(4);
+          top.Add(6);
+        }
+        else if(spec == "The Pizza Timer")
+        {
+          cr = 2;
+          top.Add(1);
+          top.Add(3);
+          top.Add(5);
+          top.Add(6);
+        }
+        else
+        {
+          return View("Order", specialVM);
+        }
+        ///  
+
+        //adding pizza and pizzatopping to repo
+        var db = new Repository();
+        db.CreatePizza(cr, si, spec);
+        int key = db.GetLasestPizzaId();
+        foreach (var i in top)
+        {
+          db.CreatePizzaTopping(key, i);
+        }
+
+        return Redirect("/pizza/get");
+        //return Redirect("/user/index"); // http 300-series status
+
+    }
+
+    [HttpDelete]
+    public IActionResult Delete()
+    {
+      var db = new Repository();
+      db.DeleteLast();
+      return Redirect("/pizza/get");
+    }
+
+
+
   }
 }

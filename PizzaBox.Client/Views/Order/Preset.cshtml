@@ -1,0 +1,19 @@
+@model PizzaBox.Client.Models.SpecialViewModel
+
+
+@using(Html.BeginForm("PresetOrder", "Order", null, FormMethod.Post))
+{
+  @Html.AntiForgeryToken();
+  
+  <h5>Pick Your Size</h5>
+  @Html.DropDownListFor(m => Model.SelectedSize, new SelectList(Model.Sizes), "-Size-")
+  @Html.ValidationMessageFor(m => Model.SelectedSize);
+  <br><br>
+
+  <h5>Pick The Special</h5>
+  @Html.DropDownListFor(m => Model.SelectedSpecial, new SelectList(Model.Specials), "-Special-")
+  @Html.ValidationMessageFor(m => Model.SelectedSpecial);
+  <br><br>
+
+  <input value="Add to Order" type="submit">
+}

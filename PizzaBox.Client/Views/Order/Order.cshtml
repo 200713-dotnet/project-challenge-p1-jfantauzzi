@@ -1,31 +1,34 @@
 @{
-    ViewData["Title"] = "Order Menu";
+    ViewData["Title"] = "Customize";
 }
 
 
 @model PizzaBox.Client.Models.PizzaViewModel
 
-
+<a href="pizza/get"> <-- Back to my Order </a>
 @using(Html.BeginForm("PlaceOrder", "Order", null, FormMethod.Post))
 {
   @Html.AntiForgeryToken();
   
   <h5>Pick Your Size</h5>
-  @Html.DropDownListFor(m => m.Size, new SelectList(Model.Sizes), "-Size-")
+  @Html.DropDownListFor(m => Model.SelectedSize, new SelectList(Model.Sizes), "-Size-")
+  @Html.ValidationMessageFor(m => Model.SelectedSize);
   <br><br>
 
   <h5>Pick Your Crust</h5>
-  @Html.DropDownListFor(m => m.Crust, new SelectList(Model.Crusts), "-Crust-")
+  @Html.DropDownListFor(m => @Model.SelectedCrust, new SelectList(Model.Crusts), "-Crust-")
+  @Html.ValidationMessageFor(m => @Model.SelectedCrust);
   <br><br>
   
-<h5> Pick Your Toppings</H5>
-foreach (var topping in Model.Toppings2)
-  {
-    @Html.CheckBoxFor(m => topping.IsSelected, new { name = "selectedtoppings2", value = topping.Text });
-    @Html.HiddenFor(m => m.SelectedToppings2)
-  }
-  <br><br>
+  <h5> Pick Your Toppings</H5>
 
+  @foreach (var topping in @Model.Toppings2)
+  {
+    <input type="checkbox" name="selectedtoppings2" id="selectedtoppings2" value="@topping.Text">
+    <label for="selectedtoppings2">@topping.Text</label>
+  }
+  @Html.ValidationMessageFor(m => m.SelectedToppings2);
+  <br><br>
 
   <input value="Add to Order" type="submit">
 }

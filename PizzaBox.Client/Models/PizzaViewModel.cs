@@ -16,21 +16,20 @@ namespace PizzaBox.Client.Models
 
     // in
     [Required(ErrorMessage = "Select a crust!")]
-    public CrustModel Crust { get; set; }
+    public string SelectedCrust { get; set; }
     [Required(ErrorMessage = "Select a size!")]
-    public SizeModel Size { get; set; }
+    public string SelectedSize { get; set; }
 
-    //get a message telling user they're out of range
-    public List<string> SelectedToppings { get; set; }
+    
+    //public List<string> SelectedToppings { get; set; }
 
-    [MinLength(2)]
-    [MaxLength(5)]
+    [MinLength(2, ErrorMessage = "You need a minimum of 2 toppings!")]
+    [MaxLength(5, ErrorMessage = "You can't have more than 5 toppings!")]
     public List<string> SelectedToppings2 { get; set; }
 
     public PizzaViewModel()
     {
       var db = new Repository();
-      //Crusts = new List<CrustModel>() { new CrustModel() { Option = "normal" } }; //repogivemecrusts()
       Crusts = db.ReadCrusts();
       Sizes = db.ReadSizes();
       Toppings = db.ReadToppings();

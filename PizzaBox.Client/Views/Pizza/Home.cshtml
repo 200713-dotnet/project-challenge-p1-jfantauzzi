@@ -1,21 +1,30 @@
 @{
   Layout = "_Layout";
+  ViewData["Title"] = "Cart";
 }
 
- @* @model PizzaBox.Client.Models.PizzaViewModel *@
-
-<h2>Pizza List</h2>
-<ul>
+<h4>Your Current Pizzas</h4>
+<ol>
   @foreach (var p in @Model)
   {
     <li>@p.Option</li>
+    @* <li> <a href="/pizza/view">  --view</a> </li> *@  @* so they can edit pizza *@
   }
-  <li> <a href="/order/start">Custom Pizza</a>  </li>
-</ul>
+  
+</ol>
+  <br>
+  <a href="/pizza/detail">View Detailed Order</a>
+  <ul>
+    <li> <a href="/order/preset">Add Preset Pizza</a> </li>
+    <li> <a href="/order/start">Add Custom Pizza</a> </li>
+    <li> <a href="/order/delete">Delete Last Pizza</a> </li>
+  </ul>
+  
 
 
-<form action=""> PizzaViewModel
+
+@* <form action=""> PizzaViewModel
   display the crusts
   display the sizes
   display the toppings
-</form>
+</form> *@

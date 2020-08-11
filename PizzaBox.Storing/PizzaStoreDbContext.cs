@@ -98,6 +98,7 @@ namespace PizzaBox.Storing
                 entity.Property(e => e.Option)
                     .IsRequired()
                     .HasMaxLength(200);
+
               });
 
       builder.Entity<Topping>(entity =>
@@ -111,11 +112,8 @@ namespace PizzaBox.Storing
 
       builder.Entity<PizzaTopping>(entity =>
                {
-                 entity.HasNoKey();
 
                  entity.ToTable("PizzaTopping", "Pizza");
-
-                 entity.Property(e => e.PizzaToppingId).ValueGeneratedOnAdd();
 
                  entity.HasOne(d => d.Pizza)
                .WithMany()
