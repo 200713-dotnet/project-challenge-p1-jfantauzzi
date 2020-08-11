@@ -1,10 +1,12 @@
 @{
-    ViewData["Title"] = "Customize";
+    ViewData["Title"] = "Custom";
 }
 
 
 @model PizzaBox.Client.Models.PizzaViewModel
 
+<h4>Custom Pizza Creation:</h4>
+<br>
 @using(Html.BeginForm("PlaceOrder", "Order", null, FormMethod.Post))
 {
   @Html.AntiForgeryToken();
@@ -19,7 +21,7 @@
   @Html.ValidationMessageFor(m => @Model.SelectedCrust);
   <br><br>
   
-  <h5> Pick Your Toppings</H5>
+  <h5> Pick Your Toppings</h5>
 
   @foreach (var topping in @Model.Toppings2)
   {

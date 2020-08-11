@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Edit?";
+}
+
+@* @Model *@
+
+<h4>Which Pizza would you like to edit?</h4>
+<br>
+
+
+@* @using(Html.BeginForm("PizzaToEdit", "Pizza", null, FormMethod.Post))
+{
+  
+  <h5>Pizzas:</h5>
+  
+  @Html.DropDownListFor(m => , new SelectList(Model), "-Pizza-")
+
+
+  <br><br>
+
+  <input value="Edit this One" type="submit">
+} *@

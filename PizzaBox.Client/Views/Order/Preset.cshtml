@@ -1,6 +1,11 @@
+@{
+    ViewData["Title"] = "Special";
+}
+
 @model PizzaBox.Client.Models.SpecialViewModel
 
-
+<h4>Specialty Pizza Creation:</h4>
+<br>
 @using(Html.BeginForm("PresetOrder", "Order", null, FormMethod.Post))
 {
   @Html.AntiForgeryToken();
