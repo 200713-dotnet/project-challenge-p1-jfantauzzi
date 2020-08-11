@@ -129,14 +129,25 @@ namespace PizzaBox.Storing.Repository
 
     public void Update()
     {
-
+      
     }
 
     public void DeleteLast()
     {
-      /* var id = GetLasestPizzaId();
-      _db.
-      _db.SaveChanges(); */
+      var id = GetLasestPizzaId();
+      var foreignkeys = new List<int>();
+
+      foreach (var e in _db.PizzaTopping)
+      {
+        if (e.PizzaId == id)
+        {
+          _db.PizzaTopping.Remove(e);
+        }
+      }
+
+      _db.Pizzas.Remove(_db.Pizzas.SingleOrDefault(p => p.PizzaId == id));
+
+      _db.SaveChanges();
     }
 
   }

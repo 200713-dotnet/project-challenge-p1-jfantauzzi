@@ -178,7 +178,7 @@ namespace PizzaStore.Client.Controllers
 
     }
 
-    [HttpDelete]
+    [HttpGet]
     public IActionResult Delete()
     {
       var db = new Repository();

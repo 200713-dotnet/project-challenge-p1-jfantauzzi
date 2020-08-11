@@ -5,7 +5,6 @@
 
 @model PizzaBox.Client.Models.PizzaViewModel
 
-<a href="pizza/get"> <-- Back to my Order </a>
 @using(Html.BeginForm("PlaceOrder", "Order", null, FormMethod.Post))
 {
   @Html.AntiForgeryToken();
